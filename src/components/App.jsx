@@ -1,63 +1,49 @@
-import { Component } from 'react';
-import { Wrapper } from './Common.styled';
+import { useState, useEffect } from 'react';
+import { Wrapper, Thumb } from './App.styled';
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
 import { ContactList } from './ContactList/ContactList';
 import { Notify } from 'notiflix';
 
-export class App extends Component {
-  state = {
-    contacts: [],
-    filter: ''
-  };
-  componentDidMount() {
+export const App = () => {
+  const [contacts, setContacts] = useState([]);
+  const [filterValue, setFilterValue] = useState('');
+
+  useEffect(() => {
     const storedContacts = JSON.parse(localStorage.getItem("contacts"));
-    if (storedContacts) {
-      this.setState(() => ({
-      contacts: storedContacts,
-    }));
+    if (storedContacts.length) {
+      setContacts(storedContacts);
     }
-  };
-  componentDidUpdate() {
-    localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
-  };
-  componentDidCatch(error) { 
-    console.log(error);
-  };
-  addContact = (contact) => {
-    const isContactExists = this.state.contacts.some(
+  }, []);
+
+  useEffect(() => {
+      localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
+
+  const addContact = (contact) => {
+    const isContactExists = contacts.some(
       (existingContact) => existingContact.name === contact.name
     );
     if (isContactExists) {
         Notify.info(`${contact.name} is already in contacts`);
         return
-    } 
-    this.setState((prevState) => ({
-      contacts: [...prevState.contacts, contact],
-    }));
+    }
+    setContacts([...contacts, contact]);
   };
-  addFilter = (value) => {
-    console.log(value);
-    this.setState(() => ({
-      filter: value,
-    }));
-  }
-  getFiltredContacts = () => this.state.contacts.filter(contact => contact.name.toLowerCase().includes(this.state.filter));
-  deleteContact = (e) => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== e.target.id),
-    }));
-  };
-  render() {
-    return (
+
+  const addFilter = (value) => setFilterValue(value);
+
+  const getFiltredContacts = () => contacts.filter(contact => contact.name.toLowerCase().includes(filterValue));
+
+  const deleteContact = (e) => setContacts(contacts.filter(contact => contact.id !== e.target.id));
+  return (
       <Wrapper>
         <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact}/>
+        <ContactForm onSubmit={addContact}/>
 
-        <h2>Contacts</h2>
-        <Filter contacts={this.state.contacts} onChange={this.addFilter} />
-        <ContactList contacts={this.getFiltredContacts} onDeleteBtnClick={this.deleteContact} />
+      <h2>Contacts</h2>
+      {contacts.length ? (<Filter contacts={contacts} onChange={addFilter} />) : null}
+      {contacts.length ? (<ContactList contacts={getFiltredContacts} onDeleteBtnClick={deleteContact} />) : (<Thumb><p>There are no contacts yet</p></Thumb>)}
       </Wrapper>
     );
-  }
 }

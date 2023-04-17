@@ -1,44 +1,32 @@
-import { Component } from 'react';
+import { useState } from 'react';
 import PropTypes from 'prop-types';
 import { nanoid } from 'nanoid';
 import { FilterDiv, FilterInput } from './Filter.styled';
 
-export class Filter extends Component {
-  state = {
-    filter: '',
-  };
-  handleChange = e => {
+export const Filter = ({ onChange, contacts }) => {
+  const [filterValue, setFilterValue] = useState('');
+
+  const handleChange = e => {
     const value = e.target.value.toLowerCase();
-    this.setState({
-      filter: value,
-    });
-    this.props.onChange(value);
+    setFilterValue(value);
+    onChange(value);
   };
-  render() {
-    const filterInputId = nanoid();
-    return (
-      <>
-        {this.props.contacts.length ? (
-          <FilterDiv>
-            <label htmlFor={filterInputId}>Find contacts by name</label>
-            <FilterInput
-              type="text"
-              id={filterInputId}
-              onChange={this.handleChange}
-              value={this.state.filter}
-            ></FilterInput>
-          </FilterDiv>
-        ) : (
-            <FilterDiv>
-              <p>There are no contacts yet</p>
-            </FilterDiv>
-        )}
-      </>
-    );
-  }
-}
+
+  const filterInputId = nanoid();
+  return (
+        <FilterDiv>
+          <label htmlFor={filterInputId}>Find contacts by name</label>
+          <FilterInput
+            type="text"
+            id={filterInputId}
+            onChange={handleChange}
+            value={filterValue}
+          ></FilterInput>
+        </FilterDiv>
+  );
+};
 
 Filter.propTypes = {
-  onChange: PropTypes.func,
-  contacts: PropTypes.array
+  onChange: PropTypes.func.isRequired,
+  contacts: PropTypes.array.isRequired,
 };

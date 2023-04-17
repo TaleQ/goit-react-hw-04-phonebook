@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Button, Input } from 'components/Common.styled';
 
 export const StyledForm = styled.form`
 margin: 20px auto;
@@ -18,7 +17,7 @@ justify-content: flex-end;
 align-items: baseline;
 `;
 
-export const FormInput = styled(Input)`
+export const FormInput = styled.input`
 width: 70%;
 margin-top: 5px;
 margin-left: 5px;
@@ -28,7 +27,7 @@ margin-left: 5px;
 }
 `;
 
-export const FormButton = styled(Button)`
+export const FormButton = styled.button`
 width: 200px;
 margin: 0 auto;
 padding: 10px;

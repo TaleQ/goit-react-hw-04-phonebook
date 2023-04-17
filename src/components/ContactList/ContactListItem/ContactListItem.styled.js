@@ -1,5 +1,4 @@
 import styled from "styled-components";
-import { Button } from "components/Common.styled";
 
 export const ContactItem = styled.li`
 display: flex;
@@ -11,9 +10,9 @@ font-size: 22px;
   align-items: center;
 
 }
-`
+`;
 
-export const DeleteButton = styled(Button)`
+export const DeleteButton = styled.button`
 width: 65px;
 background-color: #ffffff;
 border: 1px solid #2160c4;

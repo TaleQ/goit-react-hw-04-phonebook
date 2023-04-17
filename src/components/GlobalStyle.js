@@ -6,24 +6,30 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Roboto', 'Oxygen','Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
     font-size: 20px;
     color:  #06347d;
+    margin: 0;
   }
   img {
     display: block;
     max-width: 100%;
   }
   ul {
-    margin: 0;
     padding-left: 0;
     list-style: none;
   }
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    margin: 0;
+  button {
+    display: inline-block;
+    cursor: pointer;
+    border-radius: 4px;
+    border-style: outset;
+    color: inherit;
+  }
+  input {
+    width: 70%;
+    padding: 5px;
+    outline: transparent;
+    border: 1px solid #2160c4;
+    border-radius: 4px;
+    color: inherit
   }
 `;
 

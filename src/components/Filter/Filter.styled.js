@@ -1,13 +1,12 @@
 import styled from "styled-components";
-import { Input } from "components/Common.styled";
+import { Thumb } from "components/App.styled";
 
-export const FilterDiv = styled.div`
-margin: 15px auto;
+export const FilterDiv = styled(Thumb)`
 display: flex;
 flex-direction: column;
 gap: 10px;
 `;
 
-export const FilterInput = styled(Input)`
+export const FilterInput = styled.input`
 margin: 0 auto;
 `
